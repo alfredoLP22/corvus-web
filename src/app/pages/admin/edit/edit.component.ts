@@ -189,7 +189,7 @@ export class EditComponent {
   editShip() {
     this.shipmentsService.update(this.shipment.id,this.shipmentForm.value)
     .subscribe((resp) => {
-      console.log(resp);
+      this.loadShipment(this.shipment.id);
     })
   }
 }
