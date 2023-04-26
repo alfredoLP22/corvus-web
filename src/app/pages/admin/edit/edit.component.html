@@ -1,0 +1,183 @@
+<div *ngIf="isLoad">
+    <div class="w-90dvw border-soft p-4 mt-5">
+        <h3>Editar viaje</h3>
+        <div class="card">
+          <div class="card-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Cliente</th>
+                  <th scope="col">Origen</th>
+                  <th scope="col">Destino</th>
+                  <th scope="col">Unidad</th>
+                  <th scope="col">Folio de Viaje</th>
+                  <th scope="col">Ruta</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th> {{ shipment.customer_name }} </th>
+                  <td> {{ shipment.origin }} </td>
+                  <td> {{ shipment.destination }}  </td>
+                  <td> {{ shipment.vehicle_type }} </td>
+                  <td> {{ shipment.folio }} </td>
+                  <td> {{ shipment.customer_route }} </td>
+
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <form
+        [formGroup]="shipmentForm"
+        id="shipmentForm">
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label>Cliente</label>
+                <input type="text" class="form-control" formControlName="customer_name" >
+            </div>
+            <div class="form-group col-md-3">
+                <label>Ruta</label>
+                <input type="text" class="form-control" formControlName="customer_route_name" >
+              </div>
+              <div class="form-group col-md-3">
+                <label>Precio viaje</label>
+                <input type="text" class="form-control" formControlName="cost" >
+              </div> 
+              <div class="form-group col-md-3">
+                <label>Referencia cliente</label>
+                <input type="text" class="form-control" formControlName="customer_invoice" >
+              </div>
+            </div>
+            <div class="form-row">
+              
+              <div class="form-group col-md-3">
+                <label>Operador</label>
+                <input type="text" class="form-control" formControlName="vehicle_operator_name" >
+              </div>
+              <div class="form-group col-md-3">
+                <label>Tabulador</label>
+                <input class="form-control" formControlName="tab" >
+              </div>
+              <div class="form-group col-md-3">
+                <label>Vehiculo</label>
+                <input type="text" class="form-control" formControlName="vehicle_one_name" >
+              </div>
+              <div class="form-group col-md-3">
+                <label>Remolque</label>
+                <input type="text" class="form-control" formControlName="trailer_one_name" >
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label>Dolly</label>
+                <input type="text" class="form-control" formControlName="dolly" >
+              </div>
+              <div class="form-group col-md-3">
+                <label>Remolque 2</label>
+                <input type="text" class="form-control" formControlName="" >
+              </div>
+                
+                <div class="form-group col-md-3">
+                  <label>Temperatura °C</label>
+                  <input type="text" class="form-control" formControlName="temperature" >
+                </div>
+                <div class="form-group col-md-3">
+                  <label>Temperatura °F</label>
+                  <input type="text" class="form-control" formControlName="temperatureF" >
+                </div>
+            </div>
+          </form>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="card" >
+          <div class="card-body">
+            <h5 class="card-title">
+              Recolección 1 
+            </h5>
+            <div class="card-text">
+              <div class="form-group ">
+                <label>Recolección</label>
+                <input type="text" class="form-control" value="{{ cordsOrigin[0].name }}"  >
+              </div>
+
+              <div class="form-group ">
+                <label>Dirección</label>
+                <input type="text" class="form-control" value="{{ cordsOrigin[0].street  }}"  >
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-group">
+                    <label>Fecha de carga </label>
+                    <input type="text" class="form-control" value="{{ shipment.departure_date }}"  >
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-group">
+                    <label>Hora de carga </label>
+                    <input type="text" class="form-control" value="{{ shipment.departure_time }}"  >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card"  *ngFor="let cord of cords">
+          <div class="card-body">
+            <h5 class="card-title">
+              Descarga
+            </h5>
+            <div class="card-text">
+              <div class="form-group ">
+                <label>Recolección</label>
+                <input type="text" class="form-control" value="{{ cord.name }}"  >
+              </div>
+
+              <div class="form-group ">
+                <label>Dirección</label>
+                <input type="text" class="form-control" value="{{ cord.street  }}"  >
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-group">
+                    <label>Fecha de carga </label>
+                    <input type="text" class="form-control" value="{{ shipment.departure_date }}"  >
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-group">
+                    <label>Hora de carga </label>
+                    <input type="text" class="form-control" value="{{ shipment.departure_time }}"  >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="">
+          <google-map
+          [center]="center"
+          [options]="options"
+          width="100%"
+          >
+              <map-marker
+                  *ngFor="let marker of markers"
+                  [position]="marker.position"
+                  [label]="marker.label"
+                  [title]="marker.title"
+                  [options]="marker.options"
+              >
+              </map-marker>
+          </google-map>
+        </div>
+      </div>
+    </div>
+</div>
